@@ -1,58 +1,74 @@
 <template>
-    <div class="base" id="base">
+    <div class="base">
         <div class="home-base">
             <div class="text-container">
                 <div class="page-block absolute-right">
-                    <div>
-                        <div class="gradient-yellow home-font">登录</div>
-                        <form>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                    <div class="content-frame">
+                        <div class="content">
+                            <div class="gradient-yellow home-font">登&nbsp;&nbsp;录</div>
+                            <form class="main-content">
+                                <div class="mb-3">
+                                    <label class="form-label label-self">
+                                        Username
+                                        <input type="text" v-model="login.username" class="form-control">
+                                    </label>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label label-self">
+                                        Password
+                                        <input type="password" v-model="login.password" class="form-control">
+                                    </label>
+                                </div>
+                                <button @click.prevent="loginSubmission" type="submit" class="btn btn-primary btn-self">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="page-block absolute-left">
-                    <div>
-                        <div class="gradient-green home-font">基于ThreeJS的</div>
-                        <div class="gradient-green home-font">3D模型共享平台</div>
+                    <div class="content-frame">
+                        <div class="content">
+                            <div class="gradient-green home-font">基于ThreeJS的</div>
+                            <div class="gradient-green home-font">3D模型共享平台</div>
+                        </div>
                     </div>
                 </div>
                 <div class="page-block absolute-right">
-                    <div>
-                        <div class="gradient-yellow home-font">注册</div>
-                        <form>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail2" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputConfirm2" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputConfirm2" aria-describedby="emailHelp">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword2" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword2">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                    <div class="content-frame">
+                        <div class="content">
+                            <div class="gradient-yellow home-font">注&nbsp;&nbsp;册</div>
+                            <form class="main-content">
+                                <div class="mb-3">
+                                    <label class="form-label label-self">
+                                        Username
+                                        <input type="text" v-model="register.username" class="form-control">
+                                    </label>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label label-self">
+                                        Password
+                                        <input type="password" v-model="register.password" class="form-control">
+                                    </label>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label label-self">
+                                        Confirmation
+                                        <input type="password" v-model="register.confirmation" class="form-control">
+                                    </label>
+                                </div>
+                                <button type="submit" @click.prevent="registerSubmission" class="btn btn-primary btn-self">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="canvas-container">
-        </div>
+        <div id="canvas-container"></div>
     </div>
 </template>
 
 <script>
 import $ from "jquery";
+import { ref } from "vue";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
@@ -60,9 +76,52 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import gsap from "gsap";
 
 export default {
+    name: "HomePage",
+    setup(){
+        let login = ref({
+            username: "",
+            password: ""
+        });
+        let register = ref({
+            username: "",
+            password: "",
+            confirmation: ""
+        });
+        const sendData = function(url, data){
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                dataType: "json",
+                success: function(resp){
+                    console.log(resp);
+                },
+            })
+        };
+        const loginSubmission = function(){
+            console.log(login.value.username, login.value.password);
+            const url = "http://127.0.0.1:8080/catalina/login";
+            const data = {
+                username: login.value.username,
+                password: login.value.password
+            };
+            sendData(url, data);
+        };
+        const registerSubmission = function(){
+            console.log(register.value.username, register.value.password, register.value.confirmation);
+            const url = "http://127.0.0.1:8080/catalina/register";
+            const data = {
+                username: register.value.username,
+                password: register.value.password,
+                confirmation: register.value.confirmation
+            };
+            sendData(url, data);
+        }
+        return{
+            login, register, loginSubmission, registerSubmission
+        }
+    },
     mounted(){
-        $("#HomePage").css("border-color", "#42b883");
-
         const scene = new THREE.Scene();
         const offsetX = 12;
         const verticalGap = 64;
@@ -107,17 +166,17 @@ export default {
         // const shadowHelper = new THREE.CameraHelper(pointLight.shadow.camera);
         // const shadowHelper = new THREE.CameraHelper(spotLight.shadow.camera);
         // scene.add(shadowHelper);
-        const axesHelper = new THREE.AxesHelper(12);
-        scene.add(axesHelper);
+        // const axesHelper = new THREE.AxesHelper(12);
+        // scene.add(axesHelper);
 
         //y: 64
-        let mario;
-        loader.load(require("../assets/model/mario_lego.glb"), (gltf) => {
-            mario = gltf.scene;
-            mario.scale.set(4, 4, 4);
-            mario.position.set(-offsetX - 4, -verticalGap - 8, 0);
-            scene.add(mario);
-            console.log(mario);
+        let animeCar;
+        loader.load(require("../assets/model/che.glb"), (gltf) => {
+            animeCar = gltf.scene;
+            animeCar.scale.set(2, 2, 2);
+            animeCar.position.set(-offsetX + 2, verticalGap - 6, 0);
+            scene.add(animeCar);
+            // console.log(animeCar);
         });
 
         //y: 0
@@ -138,13 +197,13 @@ export default {
         });
 
         //y: -64
-        let animeCar;
-        loader.load(require("../assets/model/che.glb"), (gltf) => {
-            animeCar = gltf.scene;
-            animeCar.scale.set(2, 2, 2);
-            animeCar.position.set(-offsetX + 2, verticalGap - 6, 0);
-            scene.add(animeCar);
-            console.log(animeCar);
+        let mario;
+        loader.load(require("../assets/model/mario_lego.glb"), (gltf) => {
+            mario = gltf.scene;
+            mario.scale.set(2, 2, 2);
+            mario.position.set(-offsetX / 2, -verticalGap - 4, offsetX);
+            scene.add(mario);
+            // console.log(mario);
         });
 
         // const sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
@@ -177,12 +236,8 @@ export default {
         // console.log(height);
         // $("#base").css("height", height + "");
 
-        // console.log("before", camera.position.y);
         // const controls = new OrbitControls(camera, res);
-        // controls.enableDamping = true;
         // camera.position.set(0, 0, 24);
-        // controls.update();
-        // console.log("after", camera.position.y);
         // camera.position.y = 0;
 
         $(window).on("resize", function(){
@@ -211,7 +266,7 @@ export default {
 
         // let offsetY = ref(-100);
         const scroll = function(positionY){
-            console.log(positionY, verticalGap, camera.position.y % verticalGap);
+            // console.log(positionY, verticalGap, camera.position.y % verticalGap);
             if(camera.position.y % verticalGap === 0){
                 gsap.to(camera.position, { y: positionY, duration: 1, ease: "power1.inOut" });
                 gsap.to(".text-container", { y: positionY * 100 / 64 - 100 + "vh", duration: 1, ease: "power1.inOut" });
@@ -233,10 +288,7 @@ export default {
             spotLight.position.set(Math.sin(time / 2) * offsetX + offsetX, offsetX, Math.cos(time / 2) * offsetX);
             renderer.render(scene, camera);
             requestAnimationFrame(render);
-        }
-    },
-    unmounted(){
-        $("#HomePage").css("border-color", "transparent");
+        };
     }
 }
 </script>
@@ -247,6 +299,7 @@ export default {
     position: absolute;
     left: 0;
     top: 0;
+    z-index: -1;
 }
 .base{
     display: flex;
@@ -259,13 +312,10 @@ export default {
 .home-base{
     width: 100%;
     overflow-y: hidden;
+    position: relative;
 }
 .text-container{
-    /* display: flex; */
     width: 100%;
-    /* height: 300vh; */
-    /* flex-direction: column; */
-    /* justify-content: space-around; */
     transform: translate(0, -100vh);
 }
 .page-block{
@@ -275,9 +325,6 @@ export default {
     /* flex-direction: column; */
     align-items: center;
 }
-/* .vertical-align{
-    align-self: center;
-} */
 .home-font{
     font-size: 6vh;
     font-weight: 900;
@@ -300,5 +347,25 @@ export default {
 }
 .absolute-left{
     justify-content: flex-start;
+}
+.content-frame{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+.content{
+    min-width: 56%;
+}
+.main-content{
+    /* z-index: 1; */
+    font-weight: bold;
+}
+.label-self{
+    width: 100%;
+}
+.btn-self{
+    margin-top: 16px;
+    width: 100%;
+    font-weight: bold;
 }
 </style>
