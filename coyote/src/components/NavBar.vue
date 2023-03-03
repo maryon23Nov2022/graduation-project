@@ -82,13 +82,38 @@
 </div>
 </template>
 
+<script>
+import $ from "jquery";
+
+export default{
+    mounted(){
+        const store = this.$store;
+        $.ajax({
+            url: "http://127.0.0.1:8080/catalina/login",
+            type: "GET",
+            dataType: "json",   //Evaluates the response as JSON and returns a JavaScript object.
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function(resp){
+                console.log(resp, typeof resp);
+                if(resp.code === 1){
+                    store.commit("setLogged", true);
+                    store.commit("setUsername", resp.data);
+                }
+            },
+        });
+    }
+}
+</script>
+
 <style scoped>
 .board{
     display: flex;
     width: 100vw;
     height: 64px;
     position: fixed;
-    left: -20px;
+    left: 0;
     margin-bottom: 8px;
     box-shadow: 0px 8px 5px 0px rgba(0,0,0,0.75);
     background-color: #202124;

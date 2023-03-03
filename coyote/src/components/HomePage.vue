@@ -121,6 +121,9 @@ export default {
                 type: "POST",
                 data: data,
                 dataType: "json",   //Evaluates the response as JSON and returns a JavaScript object.
+                xhrFields: {
+                    withCredentials: true
+                },
                 success: function(resp){
                     console.log(resp, typeof resp);
                     if(resp.code === 1){
@@ -128,9 +131,11 @@ export default {
                         console.log(store);
                         store.commit("setLogged", true);
                         store.commit("setUsername", data.username);
+                    } else{
+                        message.value = resp.msg;
                     }
                 },
-            })
+            });
             console.log("sendData: ", this);
         };
         const loginSubmission = function(){
@@ -306,11 +311,10 @@ export default {
         $(window).on("mousemove", function(moveEvent){
             const x = (moveEvent.clientX / window.innerWidth) * 2 - 1;
             const y = (moveEvent.clientY / window.innerHeight) * 2 - 1;
-            mario.rotation.set(y * Math.PI / 2, x * Math.PI * 2, 0);
+            if(mario) mario.rotation.set(y * Math.PI / 2, x * Math.PI * 2, 0);
             if(flag){
                 difX = moveEvent.clientX - oriX;
-                bust.rotation.y += difX * Math.PI / window.innerWidth;
-                animeCar.rotation.y += difX * Math.PI / window.innerWidth;
+                if(bust) bust.rotation.y += difX * Math.PI / window.innerWidth;
                 oriX = moveEvent.clientX;
             }
         });
@@ -339,12 +343,23 @@ export default {
             console.log("inFunc: ", this.class, this.id);
             store.commit("setLogged", false);
             store.commit("setUsername", "zhuqi");
+            $.ajax({
+                url: "http://127.0.0.1:8080/catalina/login",
+                type: "DELETE",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(resp){
+                    console.log(resp);
+                },
+            });
         });
 
         const clock = new THREE.Clock();
         function render(){
             let time = clock.getElapsedTime();
             spotLight.position.set(Math.sin(time / 2) * offsetX + offsetX, offsetX, Math.cos(time / 2) * offsetX);
+            if(animeCar) animeCar.rotation.y = time / 4 / Math.PI;
             renderer.render(scene, camera);
             requestAnimationFrame(render);
         };

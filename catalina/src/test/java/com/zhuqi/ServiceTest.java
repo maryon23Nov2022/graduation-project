@@ -1,12 +1,11 @@
 package com.zhuqi;
 
-import com.zhuqi.config.SpringConfig;
 import com.zhuqi.config.SpringMvcConfig;
 import com.zhuqi.pojo.User;
-import com.zhuqi.service.DeleteService;
-import com.zhuqi.service.GetInfoService;
-import com.zhuqi.service.RegisterService;
-import com.zhuqi.service.UpdateService;
+import com.zhuqi.service.user.DeleteService;
+import com.zhuqi.service.user.GetInfoService;
+import com.zhuqi.service.user.RegisterService;
+import com.zhuqi.service.user.UpdateService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class ServiceTest{
         user.setPassword("123456");
         user.setUsername(null);
         user.setId(13);
-        getInfoService.getInfo(user);
+//        getInfoService.getInfo(user);
 //        deleteService.deleteUser(user);
     }
 }

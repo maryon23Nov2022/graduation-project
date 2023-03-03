@@ -2,7 +2,7 @@
 id username password
 
 文件表(模型+展示图	/home/zhuqi/user-models/userid/${model_name}/xxx.glb, xxx.jpg）
-id filename author_id size private
+id filename author_id size date animal art vehicle nature
 
 收藏表
 id user_id file_name author_id

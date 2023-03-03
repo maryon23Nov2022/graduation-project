@@ -2,10 +2,10 @@ package com.zhuqi.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.zhuqi.pojo.User;
-import com.zhuqi.service.DeleteService;
-import com.zhuqi.service.GetInfoService;
-import com.zhuqi.service.RegisterService;
-import com.zhuqi.service.UpdateService;
+import com.zhuqi.service.user.DeleteService;
+import com.zhuqi.service.user.GetInfoService;
+import com.zhuqi.service.user.RegisterService;
+import com.zhuqi.service.user.UpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +27,8 @@ public class UserController{
     @GetMapping
     public Result getUser(String req){
         User user = JSON.parseObject(req, User.class);
-        return getInfoService.getInfo(user);
+//        return getInfoService.getInfo(user);
+        return null;
     }
 
     @PostMapping
