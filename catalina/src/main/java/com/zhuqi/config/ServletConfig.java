@@ -14,7 +14,7 @@ public class ServletConfig extends AbstractAnnotationConfigDispatcherServletInit
     //load Spring container configuration
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{SpringConfig.class};
+        return null;
     }
 
     //load Spring MVC configuration

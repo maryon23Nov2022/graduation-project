@@ -24,6 +24,7 @@ public class GetInfoServiceImpl implements GetInfoService{
         for (User u : users){
             System.out.printf("%d %s\n", u.getId(), u.getUsername());
         }
+        System.out.printf("%s %s\n", "GetInfoServiceImpl", "queried");
         return new Result(Code.OK, users, "");
     }
 }

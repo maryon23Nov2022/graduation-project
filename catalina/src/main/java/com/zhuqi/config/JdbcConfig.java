@@ -16,7 +16,7 @@ public class JdbcConfig{
     @Value("${jdbc.password}")
     private String password;
 
-    @Bean
+    @Bean   //Used to mark a method as one that creates a bean and Spring will then add it to the context for us. The return type of the method defines the type of bean that is created,
     public DataSource dataSource(){
         System.out.printf("driver = %s\n", driver);
         System.out.printf("url = %s\n", url);

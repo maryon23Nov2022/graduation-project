@@ -41,7 +41,7 @@
                     <span>
                         Account<i class="arrow">&lt;</i>
                         <div class="drop-content" style="width: 192px">
-                            <div v-if="this.$store.state.logged">
+                            <div v-show="this.$store.state.logged">
                                 <div class="dpdown-text">Signed in as:</div>
                                 <div class="dpdown-text" style="width: 100%; text-align: right">{{ this.$store.state.username }}</div>
                                 <div class="horizontal-line"></div>
@@ -51,9 +51,9 @@
                                 <router-link class="dpdown-option" to="/">Help</router-link>
                                 <router-link class="dpdown-option" to="/">Settings</router-link>
                                 <div class="horizontal-line"></div>
-                                <a class="dpdown-option">Sign&nbsp;out</a>
+                                <a class="dpdown-option" id="signOut">Sign&nbsp;out</a>
                             </div>
-                            <div v-else>
+                            <div v-show="this.$store.state.logged === false">
                                 <router-link id="goToLogin" class="dpdown-option" to="/">Sign&nbsp;in</router-link>
                                 <router-link id="goToRegister" class="dpdown-option" to="/">Create&nbsp;account</router-link>
                                 <div class="horizontal-line"></div>

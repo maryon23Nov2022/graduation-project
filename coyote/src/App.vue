@@ -7,32 +7,33 @@
             </KeepAlive>
         </RouterView>
 
-
-        <ul>
-            <li>this is the 1st li</li>
-            <li>this is the 2nd li</li>
-            <li>this is the 1st li</li>
-            <li>this is the 2nd li</li>
-            <li>this is the 1st li</li>
-            <li>this is the 2nd li</li>
-            <li>{{ name }}</li>
-            <li>type = {{ job.type }}</li>
-            <li>salary = {{ job.salary }}</li>
-            <li>gender.value = {{ gender }}</li>
-        </ul>
-        <input type="text" v-model="name">
-        <input type="text" v-model="job.type">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-            </button>
-            <ul class="dropdown-menu">
-                <li><button class="dropdown-item" type="button">{{ name }}</button></li>
-                <li><button class="dropdown-item" type="button">{{ age }}</button></li>
-                <li><button class="dropdown-item" type="button">{{ gender }}</button></li>
+        <div style="display:none">
+            <ul>
+                <li>this is the 1st li</li>
+                <li>this is the 2nd li</li>
+                <li>this is the 1st li</li>
+                <li>this is the 2nd li</li>
+                <li>this is the 1st li</li>
+                <li>this is the 2nd li</li>
+                <li>{{ name }}</li>
+                <li>type = {{ job.type }}</li>
+                <li>salary = {{ job.salary }}</li>
+                <li>gender.value = {{ gender }}</li>
             </ul>
+            <input type="text" v-model="name">
+            <input type="text" v-model="job.type">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+                </button>
+                <ul class="dropdown-menu">
+                    <li><button class="dropdown-item" type="button">{{ name }}</button></li>
+                    <li><button class="dropdown-item" type="button">{{ age }}</button></li>
+                    <li><button class="dropdown-item" type="button">{{ gender }}</button></li>
+                </ul>
+            </div>
+            <button @click="sayHello">button</button>
         </div>
-        <button @click="sayHello">button</button>
     </div>
 </template>
 

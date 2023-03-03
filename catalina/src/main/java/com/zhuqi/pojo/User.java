@@ -8,7 +8,6 @@ public class User{
     private Integer id;
     private String username;
     private String password;
-    private String identity;
 
     public User(){}
 
@@ -18,7 +17,6 @@ public class User{
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", identity='" + identity + '\'' +
                 '}';
     }
 
@@ -26,7 +24,6 @@ public class User{
         this.id = id;
         this.username = username;
         this.password = password;
-        this.identity = identity;
     }
 
     public Integer getId() {
@@ -51,13 +48,5 @@ public class User{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
     }
 }

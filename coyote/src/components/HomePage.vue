@@ -20,6 +20,7 @@
                                     </label>
                                 </div>
                                 <button @click.prevent="loginSubmission" type="submit" class="btn btn-primary btn-self">Submit</button>
+                                <div class="message">{{ message }}</div>
                             </form>
                         </div>
                     </div>
@@ -56,6 +57,7 @@
                                     </label>
                                 </div>
                                 <button type="submit" @click.prevent="registerSubmission" class="btn btn-primary btn-self">Submit</button>
+                                <div class="message">{{ message }}</div>
                             </form>
                         </div>
                     </div>
@@ -69,15 +71,21 @@
 <script>
 import $ from "jquery";
 import { ref } from "vue";
+import { useStore } from "vuex";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import gsap from "gsap";
 
+// setup() itself does not have access to the component instance - ${this} will have a value of undefined inside setup().
+// You can access Composition-API-exposed values from Options API, but not the other way around.
+// So store in vuex can get by call "this.$store" outside the setup()
+
 export default {
     name: "HomePage",
     setup(){
+        const store = useStore();
         let login = ref({
             username: "",
             password: ""
@@ -87,16 +95,43 @@ export default {
             password: "",
             confirmation: ""
         });
+        let message = ref("");
         const sendData = function(url, data){
+            console.log(data.username.length, data.password.length);
+            if(data.username.length < 3){
+                message.value = "username is too short.";
+                return;
+            }
+            if(data.username.length > 16){
+                message.value = "username is too long.";
+                return;
+            }
+            if(data.password.length < 6){
+                message.value = "password is too short.";
+                return;
+            }
+            if(data.password.length > 16){
+                message.value = "password is too long.";
+                return;
+            }
+            console.log(message.value);
+            message.value = "";
             $.ajax({
                 url: url,
                 type: "POST",
                 data: data,
-                dataType: "json",
+                dataType: "json",   //Evaluates the response as JSON and returns a JavaScript object.
                 success: function(resp){
-                    console.log(resp);
+                    console.log(resp, typeof resp);
+                    if(resp.code === 1){
+                        $("#HomePage").trigger("click");
+                        console.log(store);
+                        store.commit("setLogged", true);
+                        store.commit("setUsername", data.username);
+                    }
                 },
             })
+            console.log("sendData: ", this);
         };
         const loginSubmission = function(){
             console.log(login.value.username, login.value.password);
@@ -108,23 +143,35 @@ export default {
             sendData(url, data);
         };
         const registerSubmission = function(){
+            console.log("message: ", message);
             console.log(register.value.username, register.value.password, register.value.confirmation);
+            if(register.value.password !== register.value.confirmation){
+                message.value = "password and confirmation are inconsistent.";
+                return;
+            }
             const url = "http://127.0.0.1:8080/catalina/register";
             const data = {
                 username: register.value.username,
                 password: register.value.password,
-                confirmation: register.value.confirmation
+                // confirmation: register.value.confirmation
             };
             sendData(url, data);
         }
         return{
-            login, register, loginSubmission, registerSubmission
+            login, register, message, loginSubmission, registerSubmission
         }
     },
+
     mounted(){
+        console.log("mounted:\n");
+        console.log(this);
+        console.log(this.login);
+        // console.log(this.store);
+        console.log(this.$store);
+        const store = this.$store;
         const scene = new THREE.Scene();
         const offsetX = 12;
-        const verticalGap = 64;
+        const verticalGap = 32;
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerWidth * 9 / 16), 0.125, 256);
         camera.position.set(0, 0, 24);      //x, y, z
@@ -137,16 +184,16 @@ export default {
         loader.setDRACOLoader(dracoLoader);
 
         // const side = 12;
-        // const directionalLight = new THREE.DirectionalLight(0xffffff, 4);
-        // directionalLight.castShadow = true;
-        // directionalLight.distance = 16;
-        // directionalLight.position.set(0, 16, 0);
-        // directionalLight.shadow.camera.top = side;
-        // directionalLight.shadow.camera.bottom = -side;
-        // directionalLight.shadow.camera.left = side;
-        // directionalLight.shadow.camera.right = -side;
-        // directionalLight.shadow.camera.far = 48;
-        // scene.add(directionalLight);
+        const houseLight = new THREE.SpotLight(0xffffff, 1024);
+        // houseLight.castShadow = true;
+        houseLight.distance = 32;
+        houseLight.position.set(0, -verticalGap + offsetX, offsetX);
+        // houseLight.shadow.camera.top = side;
+        // houseLight.shadow.camera.bottom = -side;
+        // houseLight.shadow.camera.left = side;
+        // houseLight.shadow.camera.right = -side;
+        // houseLight.shadow.camera.far = 48;
+        scene.add(houseLight);
 
         // const pointLight = new THREE.PointLight(0xff0000);
         // pointLight.position.set(8, 0, 0);
@@ -162,7 +209,7 @@ export default {
         spotLight.penumbra = 1;
         scene.add(spotLight);
 
-        // const shadowHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+        // const shadowHelper = new THREE.CameraHelper(houseLight.shadow.camera);
         // const shadowHelper = new THREE.CameraHelper(pointLight.shadow.camera);
         // const shadowHelper = new THREE.CameraHelper(spotLight.shadow.camera);
         // scene.add(shadowHelper);
@@ -193,15 +240,17 @@ export default {
             bust.position.set(offsetX, 0, 0);
             scene.add(bust);
             spotLight.target = bust;
-            render();
         });
 
         //y: -64
         let mario;
-        loader.load(require("../assets/model/mario_lego.glb"), (gltf) => {
+        loader.load(require("../assets/model/stylised_sky_player_home_dioroma.glb"), (gltf) => {
             mario = gltf.scene;
-            mario.scale.set(2, 2, 2);
-            mario.position.set(-offsetX / 2, -verticalGap - 4, offsetX);
+            // mario.scale.set(2, 2, 2);
+            mario.scale.set(1 / 16, 1 / 16, 1 / 16);
+            mario.position.set(-offsetX, -verticalGap - 2, 0);
+            // mario.rotation.set(0, Math.PI * 0.75, 0);
+            houseLight.target = mario;
             scene.add(mario);
             // console.log(mario);
         });
@@ -255,11 +304,13 @@ export default {
             flag = false;
         });
         $(window).on("mousemove", function(moveEvent){
+            const x = (moveEvent.clientX / window.innerWidth) * 2 - 1;
+            const y = (moveEvent.clientY / window.innerHeight) * 2 - 1;
+            mario.rotation.set(y * Math.PI / 2, x * Math.PI * 2, 0);
             if(flag){
                 difX = moveEvent.clientX - oriX;
                 bust.rotation.y += difX * Math.PI / window.innerWidth;
                 animeCar.rotation.y += difX * Math.PI / window.innerWidth;
-                mario.rotation.y += difX * Math.PI / window.innerWidth;
                 oriX = moveEvent.clientX;
             }
         });
@@ -269,7 +320,7 @@ export default {
             // console.log(positionY, verticalGap, camera.position.y % verticalGap);
             if(camera.position.y % verticalGap === 0){
                 gsap.to(camera.position, { y: positionY, duration: 1, ease: "power1.inOut" });
-                gsap.to(".text-container", { y: positionY * 100 / 64 - 100 + "vh", duration: 1, ease: "power1.inOut" });
+                gsap.to(".text-container", { y: positionY * 100 / verticalGap - 100 + "vh", duration: 1, ease: "power1.inOut" });
             }
         }
         $("#goToLogin").on("click", function(){
@@ -281,6 +332,14 @@ export default {
         $("#HomePage").on("click", function(){
             scroll(0);
         });
+        console.log("beforeFunc: ", this, this.$store);
+        $("#signOut").on("click", function(){
+            console.log("signOut triggered: ", this);
+            console.log("inFunc: ", this, this.$store);
+            console.log("inFunc: ", this.class, this.id);
+            store.commit("setLogged", false);
+            store.commit("setUsername", "zhuqi");
+        });
 
         const clock = new THREE.Clock();
         function render(){
@@ -289,6 +348,7 @@ export default {
             renderer.render(scene, camera);
             requestAnimationFrame(render);
         };
+        render();
     }
 }
 </script>
@@ -300,6 +360,8 @@ export default {
     left: 0;
     top: 0;
     z-index: -1;
+    overflow: hidden;
+    max-height: 100vh;
 }
 .base{
     display: flex;
@@ -357,7 +419,6 @@ export default {
     min-width: 56%;
 }
 .main-content{
-    /* z-index: 1; */
     font-weight: bold;
 }
 .label-self{
@@ -367,5 +428,11 @@ export default {
     margin-top: 16px;
     width: 100%;
     font-weight: bold;
+}
+.message{
+    color: red;
+    margin-top: 16px;
+    text-align: center;
+    max-width: 100%;
 }
 </style>

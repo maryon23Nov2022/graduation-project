@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.zhuqi.pojo.User;
 import com.zhuqi.service.DeleteService;
 import com.zhuqi.service.GetInfoService;
-import com.zhuqi.service.LoginService;
+import com.zhuqi.service.RegisterService;
 import com.zhuqi.service.UpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 //@RequestMapping(value = {"/users"}, produces = {"application/json;charset=utf-8"})
 public class UserController{
     @Autowired
-    private LoginService loginService;
+    private RegisterService registerService;
     @Autowired
     private GetInfoService getInfoService;
     @Autowired
@@ -32,7 +32,7 @@ public class UserController{
 
     @PostMapping
     public Result addUser(@RequestBody User user){
-        return loginService.addUser(user);
+        return registerService.addUser(user);
     }
 
     @PutMapping
