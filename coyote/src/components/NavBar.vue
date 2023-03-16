@@ -47,6 +47,7 @@
                                 <div class="horizontal-line"></div>
                                 <router-link class="dpdown-option" to="/">Your&nbsp;profile</router-link>
                                 <router-link class="dpdown-option" to="/">Your&nbsp;repositories</router-link>
+                                <router-link class="dpdown-option" to="/upload">Upload&nbsp;model</router-link>
                                 <div class="horizontal-line"></div>
                                 <router-link class="dpdown-option" to="/">Help</router-link>
                                 <router-link class="dpdown-option" to="/">Settings</router-link>

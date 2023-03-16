@@ -399,7 +399,6 @@ export default {
     width: 100%;
     height: 100vh;
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
 }
 .home-font{
@@ -432,6 +431,9 @@ export default {
 }
 .content{
     min-width: 56%;
+    /* background-color: red; */
+    /* display: block; */
+    /* display: flex; */
 }
 .main-content{
     font-weight: bold;

@@ -7,6 +7,7 @@ import DocsPage from "../components/DocsPage.vue";
 import GuidePage from "../components/GuidePage.vue";
 import Tutorial from "../components/Tutorial.vue";
 import ModelPage from "../components/ModelPage.vue";
+import UploadPage from "../components/UploadPage.vue";
 
 export default createRouter({
     history: createWebHistory(),
@@ -22,6 +23,7 @@ export default createRouter({
         },
         { path: "/pageOne", component: PageOne },
         { path: "/pageTwo", component: PageTwo },
-        { path: "/models", component: ModelPage }
+        { path: "/models", component: ModelPage },
+        { path: "/upload", component: UploadPage }
     ]
 })

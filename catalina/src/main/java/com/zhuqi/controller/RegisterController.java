@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/register")
 public class RegisterController{
@@ -14,7 +16,7 @@ public class RegisterController{
     private RegisterService registerService;
 
     @PostMapping
-    public Result addUser(User user){
-        return registerService.addUser(user);
+    public Result addUser(HttpSession httpSession, User user){
+        return registerService.addUser(httpSession, user);
     }
 }

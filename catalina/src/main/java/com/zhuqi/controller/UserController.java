@@ -33,7 +33,7 @@ public class UserController{
 
     @PostMapping
     public Result addUser(@RequestBody User user){
-        return registerService.addUser(user);
+        return null;
     }
 
     @PutMapping
