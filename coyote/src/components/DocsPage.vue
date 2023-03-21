@@ -55,9 +55,6 @@ export default {
 .vertical-gap{
     padding: 3px 0;
 }
-.hover-green:hover{
-    color: #42b883;
-}
 .hover-bright:hover{
     filter: brightness(100%);
 }

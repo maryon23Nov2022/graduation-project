@@ -45,9 +45,9 @@
                                 <div class="dpdown-text">Signed in as:</div>
                                 <div class="dpdown-text" style="width: 100%; text-align: right">{{ this.$store.state.username }}</div>
                                 <div class="horizontal-line"></div>
-                                <router-link class="dpdown-option" to="/">Your&nbsp;profile</router-link>
-                                <router-link class="dpdown-option" to="/">Your&nbsp;repositories</router-link>
-                                <router-link class="dpdown-option" to="/upload">Upload&nbsp;model</router-link>
+                                <router-link class="dpdown-option" to="/account/bookmarks">Bookmarks</router-link>
+                                <router-link class="dpdown-option" to="/account/repository">Your&nbsp;repositories</router-link>
+                                <router-link class="dpdown-option" to="/account/upload">Upload&nbsp;model</router-link>
                                 <div class="horizontal-line"></div>
                                 <router-link class="dpdown-option" to="/">Help</router-link>
                                 <router-link class="dpdown-option" to="/">Settings</router-link>

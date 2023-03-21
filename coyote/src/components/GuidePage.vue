@@ -12,7 +12,7 @@ export default {
         $("#Guide").css({"color": "#42b883", "filter":"brightness(100%)"});
     },
     unmounted(){
-        $("#Guide").css({"color": "#e1e1e1", "filter":"brightness(70%)"});
+        $("#Guide").removeAttr('style');
     }
 }
 </script>

@@ -2,13 +2,14 @@
     <div class="base">
         <div class="option-container">
             <div class="upload-image">
-                <form id="form" class="content">
+                <form id="modelForm" class="content">
                     <div class="layer">
                         <div class="option">
                             <label class="option-label">
                                 <div class="title">选择要上传的模型文件</div>
                                 <img class="empty-image" src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/placeholders/emptystates/0422baf7f0bda9df4a46858877a7cda3-v2.png" alt="">
-                                <input name="modelChosen" type="file" accept=".glb">
+                                <input id="modelInput" name="modelChosen" type="file" accept=".glb">
+                                <div>{{ modelInfo }}</div>
                             </label>
                             <div class="info"></div>
                         </div>
@@ -16,7 +17,8 @@
                             <label class="option-label">
                                 <div class="title">选择用于展示的图片</div>
                                 <img class="empty-image" src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/placeholders/emptystates/0422baf7f0bda9df4a46858877a7cda3-v2.png" alt="">
-                                <input name="imgChosen" type="file" accept=".jpg,.png,.jpeg">
+                                <input id="imgInput" name="imgChosen" type="file" accept=".jpg,.png,.jpeg">
+                                <div>{{ imgInfo }}</div>
                             </label>
                             <div class="info"></div>
                         </div>
@@ -24,14 +26,14 @@
                     <div class="layer">
                         <label>
                             <span class="title">模型名：</span>
-                            <input name="modelName" class="input-text" type="text">
+                            <input id="modelName" name="modelName" class="input-text" type="text">
                         </label>
                     </div>
                 </form>
             </div>
             <div class="operation">
                 <div style="width: 50%; text-align: center;">
-                    <button type="button" class="btn btn-primary btn-self">Cancel</button>
+                    <button id="revokeUpload" type="button" class="btn btn-primary btn-self">Cancel</button>
                 </div>
                 <div style="width: 50%; text-align: center;">
                     <button id="uploadModel" type="button" class="btn btn-primary btn-self">Submit</button>
@@ -43,33 +45,68 @@
 
 <script>
 import $ from "jquery";
+import { ref } from "vue";
 
 export default{
     setup(){
+        let modelInfo = ref(""), imgInfo = ref("");
         const send = function(data){
+            // console.log(data);
             $.ajax({
-                url: "http://127.0.0.1:8080/mvc_demo/files",
+                url: "http://127.0.0.1:8080/catalina/files",
                 type: "POST",
                 data: data,
                 dataType: "json",
                 contentType: false,
                 processData: false,
+                xhrFields: {
+                    withCredentials: true
+                },
                 success: function(resp){
                     console.log(resp);
                 },
             });
         }
         const submit = function(){
-            const formData = new FormData($("#form")[0]);
+            const formData = new FormData($("#modelForm")[0]);
             send(formData);
+            // console.log("submitting");
+            // for (const [key, value] of formData) {
+            //     console.log(key, value);
+            // }
         };
-        $("#uploadModel").on("click", submit);
+        const revoke = function(){
+            modelInfo.value = imgInfo.value = $("#modelName")[0].value = "";
+            const myModel = $("#modelInput")[0].files;
+            const myImg = $("#imgInput")[0].files;
+            while(myModel.firstChild){
+                myModel.removeChild(myModel.firstChild);
+            }
+            while(myImg.firstChild){
+                myImg.removeChild(myImg.firstChild);
+            }
+        };
+        const updateModelInfo = function(){
+            // console.log($("#modelInput")[0].files);
+            modelInfo.value = $("#modelInput")[0].files[0].name;
+        };
+        const updateImgInfo = function(){
+            imgInfo.value = $("#imgInput")[0].files[0].name;
+        };
+        return{
+            modelInfo, imgInfo,
+            submit, updateModelInfo, updateImgInfo, revoke
+        };
     },
     mounted(){
-        $("#Account").css("border-color", "#42b883");
+        $("#Upload").css({"color": "#42b883", "filter":"brightness(100%)"});
+        $("#uploadModel").on("click", this.submit);
+        $("#revokeUpload").on("click", this.revoke);
+        $("#modelInput").on("change", this.updateModelInfo);
+        $("#imgInput").on("change", this.updateImgInfo);
     },
     unmounted(){
-        $("#Account").css("border-color", "transparent");
+        $("#Upload").removeAttr('style');
     }
 }
 </script>
@@ -79,16 +116,13 @@ export default{
     display: flex;
     width: 100%;
     max-width: 1400px;
-    height: 100vh;
-    margin: 0 auto;
-    padding: 88px 32px;
     justify-content: center;
     align-items: center;
     /* border: 1px solid yellow; */
     /* color: #e1e1e1; */
 }
 .option-container{
-    width: 64%;
+    width: 80%;
     min-width: 512px;
     height: 512px;
     /* border: 1px solid red; */

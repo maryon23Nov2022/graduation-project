@@ -7,6 +7,9 @@ import DocsPage from "../components/DocsPage.vue";
 import GuidePage from "../components/GuidePage.vue";
 import Tutorial from "../components/Tutorial.vue";
 import ModelPage from "../components/ModelPage.vue";
+import AccountPage from "../components/AccountPage.vue";
+import Bookmarks from "../components/Bookmarks.vue";
+import Repository from "../components/Repository.vue";
 import UploadPage from "../components/UploadPage.vue";
 
 export default createRouter({
@@ -24,6 +27,15 @@ export default createRouter({
         { path: "/pageOne", component: PageOne },
         { path: "/pageTwo", component: PageTwo },
         { path: "/models", component: ModelPage },
+        {
+            path: "/account",
+            component: AccountPage,
+            children: [
+                { path: "bookmarks", component: Bookmarks },
+                { path: "repository", component: Repository },
+                { path: "upload", component: UploadPage }
+            ]
+        },
         { path: "/upload", component: UploadPage }
     ]
 })
