@@ -10,7 +10,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 const store = createStore({
     state(){
         return {
-            logged: false,
+            logged: true,
             username: "zhuqi",
         }
     },

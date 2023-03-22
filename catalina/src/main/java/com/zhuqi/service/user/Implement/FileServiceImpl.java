@@ -32,7 +32,7 @@ public class FileServiceImpl implements FileService{
         String path = "C:\\Users\\zhuqi\\Desktop\\2022-2023-2\\graduation-project" + File.separator + authorId + File.separator + modelName;
         File file = new File(path);
         if(!file.exists()) file.mkdirs();
-        else return new Result(Code.ERR, null, "该模型名已被您以使用过");
+        else return new Result(Code.ERR, null, "该模型名已被您使用过");
         File modelFile = new File(path + File.separator + modelName + ".glb");
         File imgFile = new File(path + File.separator + modelName + ".jpg");
         System.out.printf("%s: %s %s\n", "FileServiceImpl", modelChosen.getOriginalFilename(), imgChosen.getOriginalFilename());

@@ -1,0 +1,25 @@
+查询分作者名和作品名
+个人收藏查询归为另一类
+需要接收的数据有：modelName、downloadLink、imageLink、size、liked、author
+
+个人收藏界面：只查个人收藏
+
+个人作品界面：根据作者
+商城：根据模型和作者
+
+两种查询功能，先实现商城的列表返回函数
+
+
+用户表
+id username password
+
+文件表(模型+展示图	/home/zhuqi/user-models/userid/${model_name}/xxx.glb, xxx.jpg）
+id filename author_id size date
+
+收藏表
+id user_id file_id
+
+
+收藏：前端发送作品id、SessionId，get表示收藏，delete表示取消收藏。
+
+完成后：更新service结构
