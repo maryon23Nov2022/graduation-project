@@ -48,6 +48,7 @@ import $ from "jquery";
 import { ref } from "vue";
 
 export default{
+    name: "UploadPage",
     setup(){
         let modelInfo = ref(""), imgInfo = ref("");
         const send = function(data){
@@ -64,6 +65,7 @@ export default{
                 },
                 success: function(resp){
                     console.log(resp);
+                    alert(resp.msg);
                 },
             });
         }

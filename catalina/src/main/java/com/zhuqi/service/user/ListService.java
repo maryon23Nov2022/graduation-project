@@ -3,7 +3,7 @@ package com.zhuqi.service.user;
 import com.zhuqi.controller.Result;
 
 public interface ListService{
-    Result getList(String authorName, String modelName);
+    Result getList(Integer userId, String authorName, String modelName, Boolean liked);
 
-    Result getLiked(String authorName);
+    Result getLiked(Integer userId);
 }

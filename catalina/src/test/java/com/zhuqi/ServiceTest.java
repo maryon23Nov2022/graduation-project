@@ -16,6 +16,7 @@ public class ServiceTest{
     private ListService listService;
     @Test
     public void testListService(){
-        listService.getList("", "");
+
+        listService.getList(4, "", "Sh", true);
     }
 }

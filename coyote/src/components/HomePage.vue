@@ -174,6 +174,7 @@ export default {
         // console.log(this.store);
         console.log(this.$store);
         const store = this.$store;
+        const router = this.$router;
         const scene = new THREE.Scene();
         const offsetX = 12;
         const verticalGap = 32;
@@ -351,6 +352,7 @@ export default {
                 },
                 success: function(resp){
                     console.log(resp);
+                    router.push("/")
                 },
             });
         });

@@ -7,11 +7,11 @@
 <script>
 import $ from "jquery";
 
-export default {
-    mounted(){
+export default{
+    activated(){
         $("#Bookmarks").css({"color": "#42b883", "filter":"brightness(100%)"});
     },
-    unmounted(){
+    deactivated(){
         $("#Bookmarks").removeAttr('style');
     }
 }

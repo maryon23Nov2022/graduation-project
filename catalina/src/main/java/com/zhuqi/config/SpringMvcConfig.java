@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //Create Config file and load corresponding bean
 @Configuration
 @ComponentScan(value = {"com.zhuqi"})
-//@EnableWebMvc   //Should be commented out when running test program, not sure for reason yet
+@EnableWebMvc   //Should be commented out when running test program, not sure for reason yet
 @PropertySource(value = {"classpath:jdbc.properties"})  //specify property source used for class preceded by @Import
 @Import(value = {JdbcConfig.class, MybatisPlusConfig.class, MultipartResolverConfig.class})
 public class SpringMvcConfig implements WebMvcConfigurer{

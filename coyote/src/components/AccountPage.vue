@@ -8,7 +8,11 @@
             <router-link class="normal-link vertical-gap dim-text hover-bright" to="/account/upload" id="Upload">Upload</router-link>
         </div>
         <div class="account-content">
-            <router-view></router-view>
+            <RouterView v-slot="{ Component }">
+                <KeepAlive exclude="UploadPage">
+                    <component :is="Component"/>
+                </KeepAlive>
+            </RouterView>
         </div>
     </div>
 </template>

@@ -22,4 +22,15 @@ id user_id file_id
 
 收藏：前端发送作品id、SessionId，get表示收藏，delete表示取消收藏。
 
-完成后：更新service结构
+.like-btn的id为	btn-${fileId}
+
+
+测试流程：
+多用户上传模型
+另一用户查看模型
+收藏
+下载
+收藏仓库
+
+完成后：
+更新service结构、
