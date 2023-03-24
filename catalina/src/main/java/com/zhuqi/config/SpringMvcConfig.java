@@ -21,6 +21,6 @@ public class SpringMvcConfig implements WebMvcConfigurer{
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         System.out.printf("interceptor added\n");
-        registry.addInterceptor(interceptor).addPathPatterns("/*");
+        registry.addInterceptor(interceptor).addPathPatterns("/**");
     }
 }

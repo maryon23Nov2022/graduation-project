@@ -18,7 +18,7 @@ public class LikeController{
     }
 
     @DeleteMapping("/{fileId}")
-    public Result deleteBookmark(HttpSession httpSession, @PathVariable("fileId") Integer fileId){
+    public Result deleteBookmark(HttpSession httpSession, @PathVariable Integer fileId){
         System.out.printf("%s: %d\n", "LikeController", fileId);
         return likeService.deleteBookmark((Integer)httpSession.getAttribute("id"), fileId);
     }

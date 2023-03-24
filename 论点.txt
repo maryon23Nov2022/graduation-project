@@ -1,0 +1,9 @@
+子组件修改父组件的值
+组件复用
+v-if可能造成内存泄露https://v2.vuejs.org/v2/cookbook/avoiding-memory-leaks.html
+
+Here you get the first element matched selector, it returns plain js instance.
+var m = $('.test')[0]; 
+
+Here you wrap it in a jQuery object again.
+var $md = $(m);

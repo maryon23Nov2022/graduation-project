@@ -185,7 +185,6 @@ export default {
 
         const loader = new GLTFLoader();
         const dracoLoader = new DRACOLoader();
-        require.context("!!file-loader?name=draco/[name].[ext]!../assets/draco", true, /.*/, "sync");
         dracoLoader.setDecoderPath("./draco/");
         loader.setDRACOLoader(dracoLoader);
 

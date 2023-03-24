@@ -32,5 +32,9 @@ id user_id file_id
 下载
 收藏仓库
 
+authorName, modelName, liked传入组件
+修改功能后期添加。
+点击查询重新生成列表组件。
+
 完成后：
 更新service结构、

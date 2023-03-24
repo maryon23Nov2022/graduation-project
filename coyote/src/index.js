@@ -1,4 +1,5 @@
 require.context("../public", true, /.*/i, "sync");
+require.context("!!file-loader?name=draco/[name].[ext]!./assets/draco", true, /.*/, "sync");
 
 import { createApp } from "vue";
 import { createStore } from "vuex";
