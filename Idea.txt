@@ -38,3 +38,9 @@ authorName, modelName, liked传入组件
 
 完成后：
 更新service结构、
+Exhibition的beforeUnmount
+
+
+本地Linux部署：
+nginx的server_name（不一定要修改2023/3/25）
+coyote的两个Path

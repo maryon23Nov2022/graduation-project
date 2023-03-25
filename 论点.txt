@@ -1,9 +1,31 @@
+绪论
+系统总体设计
+系统关键技术
+系统详细设计
+系统功能及实现
+结语
+参考文献
+
+
+
 子组件修改父组件的值
+
 组件复用
+
 v-if可能造成内存泄露https://v2.vuejs.org/v2/cookbook/avoiding-memory-leaks.html
 
 Here you get the first element matched selector, it returns plain js instance.
 var m = $('.test')[0]; 
-
 Here you wrap it in a jQuery object again.
 var $md = $(m);
+
+Three.js灯光移动
+
+三个服务器
+
+数据库系统和文件系统：涉及到了大量的模型文件和图片文件的上传和下载。模型文件不同于一般数据库需要存储的字符串数据，模型文件所需要的存储空间比字符串数据要大得多。
+
+413 (Request Entity Too Large)		修改nginx.conf文件
+
+
+2023/03/25 18:40:01 [crit] 5437#5437: *29 stat() "/home/zhuqi/models/1/NightSky/NightSky.jpg" failed (13: Permission denied), client: 172.27.144.1, server: 172.27.145.60, request: "GET /1/NightSky/NightSky.jpg HTTP/1.1", host: "172.27.145.60:3016", referrer: "http://172.27.145.60/"		修改nginx启动用户

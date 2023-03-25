@@ -46,15 +46,18 @@
 <script>
 import $ from "jquery";
 import { ref } from "vue";
+import { useStore } from "vuex";
 
 export default{
     name: "UploadPage",
     setup(){
         let modelInfo = ref(""), imgInfo = ref("");
+        const store = useStore();
+        const accessPath = store.state.accessPath;
         const send = function(data){
             // console.log(data);
             $.ajax({
-                url: "http://127.0.0.1:8080/catalina/files",
+                url: accessPath + "/catalina/files",
                 type: "POST",
                 data: data,
                 dataType: "json",

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.io.File;
+
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {SpringMvcConfig.class})
 public class ServiceTest{
@@ -16,7 +18,7 @@ public class ServiceTest{
     private ListService listService;
     @Test
     public void testListService(){
-
-        listService.getList(4, "", "Sh", true);
+//        System.out.printf("%s\n", File.separator);
+//        listService.getList(4, "", "Sh", false);
     }
 }

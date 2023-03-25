@@ -55,7 +55,11 @@ public class ListServiceImpl implements ListService{
         QueryWrapper<FileIndex> fileIndexQueryWrapper = new QueryWrapper<>();
         if(authorName.length() > 0) fileIndexQueryWrapper.in("author_id", authorsId);
         if(modelName.length() > 0) fileIndexQueryWrapper.like("model_name", modelName);
-        if(liked && bookmarkSet.size() > 0) fileIndexQueryWrapper.in("id", bookmarkSet);
+        if(liked){
+            if(bookmarkSet.size() > 0)
+                fileIndexQueryWrapper.in("id", bookmarkSet);
+            else return new Result(Code.OK, null, null);
+        }
         List<FileIndex> fileIndices = fileMapper.selectList(fileIndexQueryWrapper);
         System.out.printf("%s: %s\n", "ListServiceImpl", fileIndices);
         List<Map<String, Object>> data = new ArrayList<>();     //The List is an ordered collection that contains object references.
@@ -67,7 +71,7 @@ public class ListServiceImpl implements ListService{
             datum.put("size", fileIndex.getSize());
             datum.put("authorName", authorsName.get(fileIndex.getAuthorId()));
             datum.put("liked", bookmarkSet.contains(fileIndex.getId()));
-            String basePath = "http://127.0.0.1:3016/" + fileIndex.getAuthorId() + "/" + fileIndex.getModelName() + "/";
+            String basePath = "/" + fileIndex.getAuthorId() + "/" + fileIndex.getModelName() + "/";
             datum.put("downloadLink", basePath + fileIndex.getModelName() + ".glb");
             datum.put("imageLink", basePath + fileIndex.getModelName() + ".jpg");
             data.add(datum);

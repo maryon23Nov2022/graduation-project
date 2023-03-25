@@ -89,8 +89,9 @@ import $ from "jquery";
 export default{
     mounted(){
         const store = this.$store;
+        const accessPath = store.state.accessPath;
         $.ajax({
-            url: "http://127.0.0.1:8080/catalina/login",
+            url: accessPath + "/catalina/login",
             type: "GET",
             dataType: "json",   //Evaluates the response as JSON and returns a JavaScript object.
             xhrFields: {

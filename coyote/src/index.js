@@ -13,6 +13,8 @@ const store = createStore({
         return {
             logged: false,
             username: "zhuqi",
+            accessPath: "http://172.27.145.60",
+            filePath: "http://172.27.145.60:3016"
         }
     },
     mutations: {

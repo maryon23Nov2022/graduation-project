@@ -29,13 +29,6 @@ export default{
         modelLink: String
     },
     mounted(){
-        // The "while" statement here is crucial, because the v-if directive removes the parent
-        // element from the DOM, but we did not clean up the additional DOM pieces
-        // created by the last renderer.domElement, which will causing a memory leak.
-        while($("#exhibition")[0].firstChild){
-            $("#exhibition")[0].removeChild($("#exhibition")[0].firstChild);
-        }
-
         const scene = new THREE.Scene();
 
         const camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.125, 256);
@@ -88,12 +81,14 @@ export default{
             emit("updateShowModel", false);
         })
     },
-    // beforeUnmount(){
-    //     while($("#exhibition").firstChild){
-    //         $("#exhibition").removeChild($("#exhibition").firstChild);
-    //     }
-    //     console.log("Exhibition.vue", $("#exhibition")[0]);
-    // },
+    beforeUnmount(){
+        // The "while" statement here is crucial, because the v-if directive removes the parent
+        // element from the DOM, but we did not clean up the additional DOM pieces
+        // created by the last renderer.domElement, which will causing a memory leak.
+        while($("#exhibition")[0].firstChild){
+            $("#exhibition")[0].removeChild($("#exhibition")[0].firstChild);
+        }
+    }
     // unmounted(){
     //     console.log("Exhibition.vue", "unmounted");
     // }

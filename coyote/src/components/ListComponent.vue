@@ -40,6 +40,7 @@
 import $ from "jquery";
 import { ref } from "vue";
 import Exhibition from "./Exhibition.vue";
+import { useStore } from "vuex";
 
 export default {
     components:{
@@ -54,13 +55,16 @@ export default {
         let listData;
         let exhibitionLink = ref("");
         let showModel = ref(false);
+        const store = useStore();
+        const accessPath = store.state.accessPath;
+        const filePath = store.state.filePath;
         const toggleFav = function(svgId){
             const fileId = svgId.substring(4, svgId.length);
             console.log(fileId);
             svgId = "#" + svgId + " > svg";
             console.log("Repository.vue", svgId);
             console.log("Repository.vue", $(svgId).attr("fill"));
-            let type, url = "http://127.0.0.1:8080/catalina/collect";
+            let type, url = accessPath + "/catalina/collect";
             if($(svgId).attr("fill") === "#f00"){
                 $(svgId).attr("fill", "none");
                 type = "DELETE", url += "/" + fileId;
@@ -87,7 +91,7 @@ export default {
         }
         console.log("ListComponent.vue", props);
         $.ajax({
-            url: "http://127.0.0.1:8080/catalina/list",
+            url: accessPath + "/catalina/list",
             type: "GET",
             async: false,
             data:{
@@ -101,10 +105,15 @@ export default {
             success: function(resp){
                 listData = resp.data;
                 console.log(listData);
+                if(listData === null) listData = [];
             },
         });
         for(let data of listData){
             data.liked = data.liked ? "#f00" : "none";
+            data.downloadLink = filePath + data.downloadLink;
+            data.imageLink = filePath + data.imageLink;
+            console.log(data.downloadLink);
+            console.log(data.imageLink);
         }
         const exhibit = function(downloadLink){
             exhibitionLink.value = downloadLink;

@@ -86,6 +86,7 @@ export default {
     name: "HomePage",
     setup(){
         const store = useStore();
+        const accessPath = store.state.accessPath;
         let login = ref({
             username: "",
             password: ""
@@ -140,7 +141,7 @@ export default {
         };
         const loginSubmission = function(){
             console.log(login.value.username, login.value.password);
-            const url = "http://127.0.0.1:8080/catalina/login";
+            const url = accessPath + "/catalina/login";
             const data = {
                 username: login.value.username,
                 password: login.value.password
@@ -154,7 +155,7 @@ export default {
                 message.value = "password and confirmation are inconsistent.";
                 return;
             }
-            const url = "http://127.0.0.1:8080/catalina/register";
+            const url = accessPath + "/catalina/register";
             const data = {
                 username: register.value.username,
                 password: register.value.password,
@@ -174,6 +175,7 @@ export default {
         // console.log(this.store);
         console.log(this.$store);
         const store = this.$store;
+        const accessPath = store.state.accessPath;
         const router = this.$router;
         const scene = new THREE.Scene();
         const offsetX = 12;
@@ -344,7 +346,7 @@ export default {
             store.commit("setLogged", false);
             store.commit("setUsername", "zhuqi");
             $.ajax({
-                url: "http://127.0.0.1:8080/catalina/login",
+                url: accessPath + "/catalina/login",
                 type: "DELETE",
                 xhrFields: {
                     withCredentials: true

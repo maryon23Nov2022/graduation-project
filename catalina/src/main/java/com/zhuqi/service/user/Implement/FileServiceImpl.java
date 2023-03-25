@@ -28,7 +28,10 @@ public class FileServiceImpl implements FileService{
         if(authorId == null) System.out.printf("%s: %s\n", "FileServiceImpl", "authorId is null");
         else System.out.printf("%s: %d\n", "FileServiceImpl", authorId);
         Long modelSize = modelChosen.getSize();
-        String path = "C:\\Users\\zhuqi\\Desktop\\2022-2023-2\\graduation-project\\models" + File.separator + authorId + File.separator + modelName;
+        String path;
+        if("\\".equals(File.separator))
+            path = "C:\\Users\\zhuqi\\Desktop\\2022-2023-2\\graduation-project\\models" + File.separator + authorId + File.separator + modelName;
+        else path = "/home/zhuqi/models" + File.separator + authorId + File.separator + modelName;
         File file = new File(path);
         if(!file.exists()) file.mkdirs();
         else return new Result(Code.ERR, null, "该模型名已被您使用过");
