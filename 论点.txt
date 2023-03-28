@@ -1,14 +1,47 @@
 绪论
 系统总体设计
+1.系统开发环境应该删去
+冗余部分：
+2.1
+Visual Studio Code（简称VS Code）是由微软开发的一款免费、开源、跨平台的轻量级代码编辑器，支持多种编程语言和开发技术。相比于大型集成开发环境（IDE），VS Code是一款轻量级的代码编辑器，启动速度快，占用内存小。并且VS Code内置了Git工具，支持Git版本控制，用户可以直接在编辑器中进行代码提交、推送、拉取等Git操作。
+IntelliJ IDEA是一款由JetBrains开发的集成开发环境（IDE），用于Java、Kotlin、Groovy和Scala等语言的开发。它支持代码智能提示、调试、版本控制、重构、单元测试、代码分析等一系列功能，可以提高开发效率和质量。
+
+
+
 系统关键技术
+mysql, nginx, vue 3, spring mvc, jQuery, tomcat, mybatis-plus, webpack，bootstrap
+
+
 系统详细设计
+
+运行环境配置
+Node.js
+Webpack
+Vue
+
+devServer配置，https://webpack.js.org/guides/development/
+模型在线展示功能
+
 系统功能及实现
 结语
+
+
 参考文献
+一本Three.js书
+两本Java书
+一个参考论文
 
 
+
+拦截器
+
+单页面应用
+
+跨域问题的处理
 
 子组件修改父组件的值
+
+将Java对象映射到数据库表中 Mybatis，Mybatis简化了哪些操作。
 
 组件复用
 
@@ -29,3 +62,5 @@ Three.js灯光移动
 
 
 2023/03/25 18:40:01 [crit] 5437#5437: *29 stat() "/home/zhuqi/models/1/NightSky/NightSky.jpg" failed (13: Permission denied), client: 172.27.144.1, server: 172.27.145.60, request: "GET /1/NightSky/NightSky.jpg HTTP/1.1", host: "172.27.145.60:3016", referrer: "http://172.27.145.60/"		修改nginx启动用户
+
+路由管理
