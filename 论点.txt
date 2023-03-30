@@ -8,8 +8,11 @@ IntelliJ IDEA是一款由JetBrains开发的集成开发环境（IDE），用于J
 
 
 
-系统关键技术
-mysql, nginx, vue 3, spring mvc, jQuery, tomcat, mybatis-plus, webpack，bootstrap
+// 系统关键技术
+// mysql, nginx, vue 3, spring mvc, jQuery, tomcat, mybatis-plus, webpack，bootstrap
+
+
+金属性和粗糙度的区别解释不了啊，就不写了
 
 
 系统详细设计
@@ -30,6 +33,8 @@ devServer配置，https://webpack.js.org/guides/development/
 一本Three.js书
 两本Java书
 一个参考论文
+[1]P55
+[2]P59
 
 
 
