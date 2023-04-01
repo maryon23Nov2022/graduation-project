@@ -13,7 +13,7 @@
                 </a>
             </div>
             <div class="item">
-                <div class="btn-text">Size: {{ item.size }} bytes</div>
+                <div class="btn-text">Size: {{ item.size }} Kb</div>
             </div>
         </div>
         <div class="line">
@@ -110,6 +110,7 @@ export default {
         });
         for(let data of listData){
             data.liked = data.liked ? "#f00" : "none";
+            data.size = (data.size / 1024).toFixed(1);
             data.downloadLink = filePath + data.downloadLink;
             data.imageLink = filePath + data.imageLink;
             console.log(data.downloadLink);

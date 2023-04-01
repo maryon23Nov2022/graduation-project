@@ -11,8 +11,6 @@ module.exports = {
         filename: "main.js"
     },
     devServer: {
-        // host: "www.closed-doors.cn",
-        // port: 80,
         port: 3000,
         static: {
             directory: path.join(__dirname, "./dist"),

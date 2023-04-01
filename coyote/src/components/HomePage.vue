@@ -237,6 +237,8 @@ export default {
         let bust;
         loader.load(require("../assets/model/sculpture_bust_of_roza_loewenfeld.glb"), (gltf) => {
             bust = gltf.scene;
+            console.log(gltf.parser.json.extensionsRequired);
+            console.log(gltf.parser.json.extensionsUsed);
             bust.traverse(function(node){
                 if(node.isMesh){
                     node.castShadow = true;

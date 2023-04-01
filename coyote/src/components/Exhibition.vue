@@ -22,6 +22,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import Environment from "../assets/Environment.jpg";
 
 export default{
     props:{
@@ -30,8 +31,20 @@ export default{
     },
     mounted(){
         const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x888888);
+        const cubeTextureLoader = new THREE.CubeTextureLoader();
+        console.log(Environment);
+        const texture = cubeTextureLoader.load([
+            Environment,
+            Environment,
+            Environment,
+            Environment,
+            Environment,
+            Environment
+        ]);
+        scene.environment = texture;
 
-        const camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.125, 256);
+        const camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.125, 1024);
         camera.position.set(8, 8, 8);      //x, y, z
         scene.add(camera);
 
@@ -44,14 +57,22 @@ export default{
         scene.add(ambientLight);
 
         let model;
-        console.log("Exhibition.vue", this.modelLink);
-        console.log("Exhibition.vue", this);
+        // console.log("Exhibition.vue", this.modelLink);
+        // console.log("Exhibition.vue", this);
         loader.load(this.modelLink, (gltf) => {
             model = gltf.scene;
+            const bbox = new THREE.Box3().setFromObject(model);
+            const modelSize = new THREE.Vector3();
+            bbox.getSize(modelSize);
+            const desiredY = 8;
+            const scaleFactor = desiredY / modelSize.y;
+            model.scale.set(scaleFactor, scaleFactor, scaleFactor);
             scene.add(model);
+            console.log(model);
         });
 
         const renderer = new THREE.WebGLRenderer();
+        // renderer.setClearColor(0x444444, 1);
         renderer.setSize(800, 450);
         const res = renderer.domElement;
         console.log("Exhibition.vue", $("#exhibition")[0]);
